@@ -1,14 +1,15 @@
 import React from 'react'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
-import styles from "./UserRegister.module.css"
 import img1 from '../../assets/img1.png'
 import * as Yup from 'yup'
 import TextError from '../TextError'
 import { useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
-
+import '../../App.css';
+import { getSpaceUntilMaxLength } from '@testing-library/user-event/dist/utils'
 
 const UserRegister = () => {
+
     const navigate = useNavigate();
     const initialValues = {
         name: '',
@@ -16,23 +17,29 @@ const UserRegister = () => {
         mobileNumber: ''
     }
 
+    // Submit method will activate when Formik submit button clicked
+    // In submit form section just form is loging in console  and form going to be reset
+
     const handleSubmit = (values, action) => {
 
         console.log("values", values)
-       
+
         Swal.fire({
             icon: 'success',
             title: 'User data send successfully',
             confirmButtonText: 'OK',
             allowOutsideClick: false
-          }).then(()=>{
+        }).then(() => {
             navigate('/otpVerification')
             action.resetForm();
-          })
-       
-       
+        })
+
+
     }
 
+
+      // Yup validation of Formik form 
+      
     const validationSchema = Yup.object({
         email: Yup.string()
             .email('Invalid email id')
@@ -44,63 +51,85 @@ const UserRegister = () => {
 
         mobileNumber: Yup.number()
             .required("Required")
-            .max(9999999999, "<Mobile Number must be equal to 10 digit")
-            .min(1000000000, "Mobile Number must  be equal to 10 digit")
+            .typeError("That doesn't look like a phone number")
+            .positive("A phone number can't start with a minus")
+            .integer("A phone number can't include a decimal point")
+            .min(1000000000, "Minimum 10 digit required")
+            .max(9999999999, "Maximum 10 digit required")
 
     });
 
+
+
     return (
-        <div className={styles.mainDiv}>
+        <div className="mainDiv">
 
             <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
                 onSubmit={handleSubmit}
+
             >
-                <Form
-                    className={styles.FormDiv}
-                >
+                {({
+                    values,
+                    errors,
+                    touched,
+                    isValid,
+                    handleChange,
+                    setFieldValue,
+                    setFieldTouched,
+                    submitForm,
+                }) => {
+                    return (
+                        <Form
+                            className="FormDiv"
+                        >
 
-                    <img
-                        className={styles.mainImg}
-                        src={img1} />
-                    <br />
-                    <Field
-                        type="text"
-                        name='name'
-                        placeholder='Enter Name'
-                        className={styles.inputTag}
-                    />
-                    <ErrorMessage name='name' component={TextError} />
-                    <br />
-                    <Field
-                        type="text"
-                        name='email'
-                        placeholder='Enter Email'
-                        className={styles.inputTag}
-                    />
-                    <ErrorMessage name='email' component={TextError} />
-                    <br />
-                    <Field
-                        type="number"
-                        name='mobileNumber'
-                        placeholder='Enter Mobile Number'
-                        className={styles.inputTag}
-                    />
-                    <ErrorMessage name='mobileNumber' component={TextError} />
+                            <img
+                                className="mainImg"
+                                src={img1} />
+                            <br />
+                            <Field
+                                type="text"
+                                name='name'
+                                placeholder='Enter Name'
+                                className="inputTag"
+                            />
+                            <ErrorMessage name='name' component={TextError} />
+                            <br />
+                            <Field
+                                type="text"
+                                name='email'
+                                placeholder='Enter Email'
+                                className="inputTag"
+                            />
+                            <ErrorMessage name='email' component={TextError} />
+                            <br />
+                            <Field
+                                type="number"
+                                name='mobileNumber'
+                                placeholder='Enter Mobile Number'
+                                className="inputTag"
+                                onInput={(e) => {
+                                    e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 10)
+                                }}
+                                value={values.mobileNumber}
+                            />
+                            <ErrorMessage name='mobileNumber' component={TextError} />
 
-                    <br />
-                    <button
-                        onClick={() => handleSubmit}
-                        type='submit'
-                        className={styles.button}
+                            <br />
+                            <button
+                                onClick={() => handleSubmit}
+                                type='submit'
+                                className="button"
 
-                    >
-                        Submit
-                    </button>
+                            >
+                                Submit
+                            </button>
 
-                </Form>
-
+                        </Form>
+                    )
+                }}
             </Formik>
         </div>
 

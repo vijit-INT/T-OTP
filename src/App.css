@@ -2,3 +2,47 @@
   text-align: center;
  
 }
+
+.mainImg {
+  margin-top: 10%;
+  height: 200px;
+  width: 250px
+}
+
+.TextError {
+  color: red
+}
+
+.inputTag:hover {
+  border-color: rgb(255, 166, 0);
+  color: red;
+  border-top-color: aqua;
+  border-right-color: aqua;
+}
+
+.inputTag {
+  border-color: rgb(255, 166, 0);
+  color: red;
+  outline: none;
+ 
+}
+
+.mainDiv {
+  background-color: black;
+  margin-top: 10%;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  width:500px;
+  margin-left: 31.7%;
+  border-radius: 30px;
+  
+}
+
+
+.button:hover {
+  background-color: blue;
+  color: red;
+
+}
+
+

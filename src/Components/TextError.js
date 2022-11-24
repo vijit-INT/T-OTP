@@ -1,9 +1,9 @@
 import React from 'react'
-import styles from '../Components/RegisterPage.jsx/UserRegister.module.css'
+import '../App.css';
 
 const TextError = (props) => {
   return (
-    <div className={styles.TextError}>
+    <div className="TextError">
          {
             props.children
          }
