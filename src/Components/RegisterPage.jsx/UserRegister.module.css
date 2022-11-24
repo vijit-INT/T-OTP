@@ -1,0 +1,43 @@
+.mainDiv {
+    align-items: center;
+    justify-content: center;
+
+}
+
+.FormDiv {
+    margin-left: 31.5%;
+    margin-top: 10%;
+    width: 500px;
+    background-color: black;
+    border-radius: 30px;
+}
+
+.mainImg {
+    margin-top: 10%;
+    height: 200px;
+    width: 250px
+}
+
+.TextError {
+    color: red
+}
+
+.button:hover {
+    background-color: blue;
+    color: red;
+
+}
+
+.inputTag:hover {
+    border-color: rgb(255, 166, 0);
+    color: red;
+    border-top-color: aqua;
+    border-right-color: aqua;
+}
+
+.inputTag {
+    border-color: rgb(255, 166, 0);
+    color: red;
+    outline: none;
+   
+}
